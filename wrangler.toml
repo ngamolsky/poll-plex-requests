@@ -1,9 +1,18 @@
 name = "poll-plex-requests"
 main = "src/index.ts"
 compatibility_date = "2023-05-15"
+workers_dev = false
 
-# Cron Triggers
-# Docs: https://developers.cloudflare.com/workers/platform/triggers/cron-triggers/
-# Configuration: https://developers.cloudflare.com/workers/wrangler/configuration/#triggers
+kv_namespaces = [
+  { binding = "PLEX_REQUESTS", id = "12012b05c1d841de8bea0a3a26de7f16" }
+]
+
+services = [
+  { binding = "SEND_EMAIL", service = "send-email" }
+]
+
+[vars]
+NOTION_PLEX_REQUEST_DATABASE_ID = "e5296ba6f21845cf85201c96e50bddb9"
+
 [triggers]
 crons = ["* * * * *"] # * * * * * = run every minute
