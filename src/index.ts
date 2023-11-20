@@ -28,10 +28,11 @@ export default {
 			const title = request.title;
 			const who = request.who;
 			const newStatus = request.status;
+			const id = request.id;
 
 			// Check if the record exists in KV
 
-			const requestKey = `${email}-${title}`;
+			const requestKey = `${email}-${title}-${id}`;
 			const oldStatus = await env.PLEX_REQUESTS.get(requestKey);
 
 			if (oldStatus) {
