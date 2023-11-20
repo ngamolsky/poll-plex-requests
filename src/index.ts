@@ -36,12 +36,16 @@ export default {
 			const oldStatus = await env.PLEX_REQUESTS.get(requestKey);
 
 			if (oldStatus) {
-				console.log(`Found plex request in KV. Title: ${title} - Old Status: ${oldStatus} - New Status: ${newStatus} - Email: ${email}`);
+				console.log(
+					`Found plex request in KV. Title: ${title} - Old Status: ${oldStatus} - New Status: ${newStatus} - Email: ${email} - ID: ${id}`
+				);
 
 				// If it does check if the status has changed
 				if (oldStatus !== newStatus) {
 					await env.PLEX_REQUESTS.put(requestKey, newStatus);
-					console.log(`Updated plex request in KV. Title: ${title} - Old Status: ${oldStatus} - Status: ${newStatus} - Email: ${email} `);
+					console.log(
+						`Updated plex request in KV. Title: ${title} - Old Status: ${oldStatus} - Status: ${newStatus} - Email: ${email} - ID: ${id}`
+					);
 
 					// If its now "Done" send an email to recorded address
 					if (newStatus === DONE_STATUS) {
@@ -53,7 +57,7 @@ export default {
 				}
 			} else {
 				await env.PLEX_REQUESTS.put(requestKey, newStatus);
-				console.log(`Added plex request to KV. Title: ${title} - Status: ${newStatus} - Email: ${email} `);
+				console.log(`Added plex request to KV. Title: ${title} - Status: ${newStatus} - Email: ${email} - ID: ${id}`);
 
 				// If it doesn't exist and was created in Done status, send an email immediately
 				if (newStatus === DONE_STATUS) {
