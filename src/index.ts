@@ -42,7 +42,9 @@ export default {
 
 				// If it does check if the status has changed
 				if (oldStatus !== newStatus) {
-					await env.PLEX_REQUESTS.put(requestKey, newStatus);
+					await env.PLEX_REQUESTS.put(requestKey, newStatus, {
+						expirationTtl: 60 * 60 * 24 * 30, // 30 days
+					});
 					console.log(
 						`Updated plex request in KV. Title: ${title} - Old Status: ${oldStatus} - Status: ${newStatus} - Email: ${email} - ID: ${id}`
 					);
@@ -56,7 +58,9 @@ export default {
 					}
 				}
 			} else {
-				await env.PLEX_REQUESTS.put(requestKey, newStatus);
+				await env.PLEX_REQUESTS.put(requestKey, newStatus, {
+					expirationTtl: 60 * 60 * 24 * 30, // 30 days
+				});
 				console.log(`Added plex request to KV. Title: ${title} - Status: ${newStatus} - Email: ${email} - ID: ${id}`);
 
 				// If it doesn't exist and was created in Done status, send an email immediately
